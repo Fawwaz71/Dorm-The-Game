@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cf2puy4x3eeyj"]
+
+[ext_resource type="Script" uid="uid://c6rrmrjgv6byt" path="res://asset/interactable/pickable.gd" id="1_y4sc0"]
+[ext_resource type="PackedScene" uid="uid://1o6knbwdmqod" path="res://asset/interactable/broom.tscn" id="2_y4sc0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w0lcy"]
+size = Vector3(0.571289, 1.52539, 0.315796)
+
+[node name="RigidBody3D" type="RigidBody3D" groups=["pickable"]]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_y4sc0")
+item_id = "broom"
+
+[node name="Sketchfab_Scene2" parent="." instance=ExtResource("2_y4sc0")]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.816301, 0.0448609)
+shape = SubResource("BoxShape3D_w0lcy")

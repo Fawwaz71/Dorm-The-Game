@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhdd03ulmxx7w"]
+
+[ext_resource type="Script" uid="uid://c6rrmrjgv6byt" path="res://asset/interactable/pickable.gd" id="1_w0lcy"]
+[ext_resource type="PackedScene" uid="uid://3ihv4oiu4ync" path="res://asset/interactable/Guitar_new.tscn" id="2_w0lcy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w0lcy"]
+size = Vector3(0.571289, 1.52539, 0.315796)
+
+[node name="RigidBody3D" type="RigidBody3D" groups=["pickable"]]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_w0lcy")
+item_id = "guitar"
+
+[node name="defaultMaterial_009" parent="." instance=ExtResource("2_w0lcy")]
+transform = Transform3D(0.790856, 0, 0, 0, 0.790856, 0, 0, 0, 0.790856, 0, 0.943815, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.816301, 0.0448609)
+shape = SubResource("BoxShape3D_w0lcy")

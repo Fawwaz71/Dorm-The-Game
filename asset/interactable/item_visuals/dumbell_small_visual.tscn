@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsvsxum4irpj3"]
+
+[ext_resource type="PackedScene" uid="uid://cw23074i3m0nn" path="res://asset/interactable/dumbell_small.tscn" id="1_udbu6"]
+
+[node name="dumbell_small_visual" type="Node3D"]
+
+[node name="defaultMaterial_005" parent="." instance=ExtResource("1_udbu6")]
+transform = Transform3D(-1.31134e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.31134e-08, 0, 0.275674, 0)
+layers = 2

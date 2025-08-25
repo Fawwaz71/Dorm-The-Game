@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbfa5jrj4t6oj"]
+
+[ext_resource type="PackedScene" uid="uid://dsuv7wsobr7ra" path="res://asset/interactable/guitar.glb" id="1_iy6bd"]
+
+[node name="guitar" instance=ExtResource("1_iy6bd")]

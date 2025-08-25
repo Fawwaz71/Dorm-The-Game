@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://chvlnwv6kxcv3"
+path.s3tc="res://.godot/imported/charrom_41501541_87a6917f-1b32-4c30-ace9-8563964bccb6_727_727.png-69ca97f4c93f4fc60910b3d746b940cd.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "65080b32428efa72e97d3917e649035e"
+}
+
+[deps]
+
+source_file="res://asset/room/charrom_41501541_87a6917f-1b32-4c30-ace9-8563964bccb6_727_727.png"
+dest_files=["res://.godot/imported/charrom_41501541_87a6917f-1b32-4c30-ace9-8563964bccb6_727_727.png-69ca97f4c93f4fc60910b3d746b940cd.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://lg7omtw4g3kc"]
+
+[ext_resource type="PackedScene" uid="uid://3ihv4oiu4ync" path="res://asset/interactable/Guitar_new.tscn" id="1_iajr7"]
+
+[node name="Guitar_visual" type="Node3D"]
+
+[node name="defaultMaterial_009" parent="." instance=ExtResource("1_iajr7")]
+transform = Transform3D(0.790856, 0, 0, 0, 0.790856, 0, 0, 0, 0.790856, 0, 0.933401, 0)
+layers = 2

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cf3ql2jku2u5g"]
+
+[ext_resource type="Script" uid="uid://c6rrmrjgv6byt" path="res://asset/interactable/pickable.gd" id="1_7iq18"]
+[ext_resource type="PackedScene" uid="uid://cw23074i3m0nn" path="res://asset/interactable/dumbell_small.tscn" id="1_twwqc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7iq18"]
+radius = 0.201993
+height = 0.69644
+
+[node name="rigid_dumbell_small" type="RigidBody3D" groups=["pickable"]]
+collision_layer = 4
+collision_mask = 4
+mass = 5.0
+script = ExtResource("1_7iq18")
+item_id = "dumbell_small"
+
+[node name="defaultMaterial_005" parent="." instance=ExtResource("1_twwqc")]
+transform = Transform3D(-1.31134e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.31134e-08, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_7iq18")

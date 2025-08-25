@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://byo2ijmb4kwde"]
+
+[ext_resource type="Script" uid="uid://1d1ga2y6xioq" path="res://image_preview.gd" id="1_uwsjo"]
+[ext_resource type="Texture2D" uid="uid://guydl0r1jadj" path="res://asset/interactable/item_visuals/image/35784024-e57d-4929-9b91-17f555e5b15d.jpg" id="2_nwlhl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hiqwa"]
+size = Vector3(0.84668, 0.5896, 0.600586)
+
+[node name="StaticBody3D" type="StaticBody3D"]
+script = ExtResource("1_uwsjo")
+preview_texture = ExtResource("2_nwlhl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0725555, 0.0486418, 0.199707)
+shape = SubResource("BoxShape3D_hiqwa")

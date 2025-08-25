@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://b40jgcwb7ebpp"]
+
+[ext_resource type="Script" uid="uid://c6rrmrjgv6byt" path="res://asset/interactable/pickable.gd" id="1_72p4f"]
+[ext_resource type="PackedScene" uid="uid://cqpnnod7ngfvc" path="res://asset/interactable/trash object/model/trash_bag_vcblbchga_low.glb" id="2_xerqe"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jogph"]
+height = 0.481445
+radius = 0.300293
+
+[node name="Trash" type="RigidBody3D" groups=["pickable"]]
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("1_72p4f")
+item_id = "trash"
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("2_xerqe")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0251465, 0.202898, 0.0387116)
+shape = SubResource("CylinderShape3D_jogph")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfg346ulm6w4t"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v0r72"]
+size = Vector3(2.94727, 0.349316, 1.39526)
+
+[node name="Bed" type="StaticBody3D" groups=["sleepable"]]
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.07135e-06, 0, -1.03309, 0, 0.926254, 0, 1.12339, 0, 9.85233e-07, 0.00189125, 0.100555, -5.37501e-07)
+shape = SubResource("BoxShape3D_v0r72")
+
+[node name="SleepView" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.749507, -1.16728)
+cull_mask = 1047557
