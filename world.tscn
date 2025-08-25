@@ -44,6 +44,9 @@ sky_top_color = Color(0.205968, 0.252119, 0.316302, 1)
 sky_horizon_color = Color(0.441946, 0.451623, 0.4669, 1)
 sky_cover_modulate = Color(0.597176, 0.597176, 0.597176, 1)
 ground_horizon_color = Color(0.407614, 0.416916, 0.4316, 1)
+sun_angle_max = 28.29
+sun_curve = 0.454715
+energy_multiplier = 1.5
 
 [sub_resource type="Sky" id="Sky_aqk2v"]
 sky_material = SubResource("ProceduralSkyMaterial_yx0jh")
@@ -235,6 +238,7 @@ light_indirect_energy = 2.0
 light_specular = 4.613
 light_bake_mode = 1
 shadow_enabled = true
+shadow_blur = 2.71
 directional_shadow_mode = 1
 
 [node name="WorldEnvironment2" type="WorldEnvironment" parent="."]
