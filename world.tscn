@@ -40,6 +40,10 @@
 [ext_resource type="Resource" uid="uid://dwiq13mdl6k8h" path="res://asset/dialouge/tes.dialogue" id="38_yx0jh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yx0jh"]
+sky_top_color = Color(0.205968, 0.252119, 0.316302, 1)
+sky_horizon_color = Color(0.441946, 0.451623, 0.4669, 1)
+sky_cover_modulate = Color(0.597176, 0.597176, 0.597176, 1)
+ground_horizon_color = Color(0.407614, 0.416916, 0.4316, 1)
 
 [sub_resource type="Sky" id="Sky_aqk2v"]
 sky_material = SubResource("ProceduralSkyMaterial_yx0jh")
