@@ -17,14 +17,6 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4it0c"]
 radius = 0.294586
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4flbx"]
-bg_color = Color(0.374564, 0.366481, 0.344614, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_onrkg"]
-bg_color = Color(0.219608, 0.717647, 0, 1)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_4flbx"]
-
 [sub_resource type="Animation" id="Animation_4470a"]
 length = 0.001
 tracks/0/type = "value"
@@ -87,6 +79,14 @@ shader_parameter/brightnessMult = 1.5
 shader_parameter/wiggleMult = 0.001
 shader_parameter/chromaticAberrationOffset = 0.001
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4flbx"]
+bg_color = Color(0.374564, 0.366481, 0.344614, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_onrkg"]
+bg_color = Color(0.219608, 0.717647, 0, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_4flbx"]
+
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
 collision_mask = 2
@@ -123,49 +123,6 @@ script = ExtResource("2_4ntmi")
 shape = SubResource("CapsuleShape3D_4it0c")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="sprintui" type="Control" parent="CanvasLayer"]
-light_mask = 3
-visibility_layer = 3
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="sprintbar" type="ProgressBar" parent="CanvasLayer/sprintui"]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 24.0
-offset_right = 206.0
-offset_bottom = 39.0
-theme_override_styles/background = SubResource("StyleBoxFlat_4flbx")
-theme_override_styles/fill = SubResource("StyleBoxFlat_onrkg")
-max_value = 5.0
-show_percentage = false
-
-[node name="CrosshairUI" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Crosshair" type="TextureRect" parent="CanvasLayer/CrosshairUI"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -3.0
-offset_top = -3.0
-offset_right = 3.0
-offset_bottom = 3.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("CanvasTexture_4flbx")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
 anchors_preset = 15
@@ -264,6 +221,49 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="sprintui" type="Control" parent="CanvasLayer"]
+light_mask = 7
+visibility_layer = 3
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="sprintbar" type="ProgressBar" parent="CanvasLayer/sprintui"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 24.0
+offset_right = 206.0
+offset_bottom = 39.0
+theme_override_styles/background = SubResource("StyleBoxFlat_4flbx")
+theme_override_styles/fill = SubResource("StyleBoxFlat_onrkg")
+max_value = 5.0
+show_percentage = false
+
+[node name="CrosshairUI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Crosshair" type="TextureRect" parent="CanvasLayer/CrosshairUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_4flbx")
 
 [node name="SFX" type="Node3D" parent="."]
 

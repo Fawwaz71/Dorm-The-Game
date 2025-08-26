@@ -1,6 +1,7 @@
-[gd_scene load_steps=56 format=4 uid="uid://cmac83d5iyyy1"]
+[gd_scene load_steps=59 format=4 uid="uid://cmac83d5iyyy1"]
 
 [ext_resource type="PackedScene" uid="uid://csy87yqtq4xjd" path="res://asset/room/properties/desk.tscn" id="1_pkg7o"]
+[ext_resource type="Texture2D" uid="uid://c5k0kpklnrycx" path="res://asset/horn-koppe_spring_2k.hdr" id="1_ryup7"]
 [ext_resource type="PackedScene" uid="uid://bgd3c62wbk0iw" path="res://asset/interactable/rigid_acoustic.tscn" id="4_036b0"]
 [ext_resource type="PackedScene" uid="uid://dtlrsmkxtka2r" path="res://asset/Player_fix/player.tscn" id="4_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://bhdd03ulmxx7w" path="res://asset/interactable/Rigid_guitar.tscn" id="4_dwbse"]
@@ -38,33 +39,29 @@
 [ext_resource type="Texture2D" uid="uid://cijmmg6mtvty8" path="res://asset/interactable/old_flashlight_2_2.png" id="35_1ew0l"]
 [ext_resource type="Texture2D" uid="uid://c2gg6wn0s7suj" path="res://asset/interactable/old_flashlight_2_3.jpg" id="36_ryup7"]
 [ext_resource type="Resource" uid="uid://dwiq13mdl6k8h" path="res://asset/dialouge/tes.dialogue" id="38_yx0jh"]
+[ext_resource type="PackedScene" uid="uid://7qqlr4mg1puu" path="res://asset/room/linden_tree.glb" id="40_ryup7"]
+[ext_resource type="PackedScene" uid="uid://bsc6xakhpm2gt" path="res://asset/interactable/wardrobe_static.tscn" id="41_ytpkv"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yx0jh"]
-sky_top_color = Color(0.205968, 0.252119, 0.316302, 1)
-sky_horizon_color = Color(0.441946, 0.451623, 0.4669, 1)
-sky_cover_modulate = Color(0.597176, 0.597176, 0.597176, 1)
-ground_horizon_color = Color(0.407614, 0.416916, 0.4316, 1)
-sun_angle_max = 28.29
-sun_curve = 0.454715
-energy_multiplier = 1.5
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ryup7"]
+panorama = ExtResource("1_ryup7")
 
 [sub_resource type="Sky" id="Sky_aqk2v"]
-sky_material = SubResource("ProceduralSkyMaterial_yx0jh")
+sky_material = SubResource("PanoramaSkyMaterial_ryup7")
 
 [sub_resource type="Environment" id="Environment_036b0"]
 background_mode = 2
 background_color = Color(0.0253638, 0.0253638, 0.0253638, 1)
 sky = SubResource("Sky_aqk2v")
+tonemap_exposure = 0.44
 ssao_enabled = true
 ssao_radius = 16.0
 ssao_intensity = 2.27
 ssil_enabled = true
-sdfgi_bounce_feedback = 1.6
-sdfgi_min_cell_size = 0.0976563
-sdfgi_cascade0_distance = 6.25
-sdfgi_max_distance = 100.0
-sdfgi_energy = 1.5
-fog_light_color = Color(0.0995546, 0.112246, 0.132199, 1)
+fog_enabled = true
+fog_light_color = Color(0.612118, 0.644967, 0.696582, 1)
+fog_density = 0.0
+fog_sky_affect = 0.525
+fog_height_density = 0.455
 volumetric_fog_density = 0.15
 volumetric_fog_emission = Color(0.0253638, 0.0253638, 0.0253638, 1)
 adjustment_brightness = 0.75
@@ -505,6 +502,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65242, 0, 1.1253)
 [node name="rigid_bottles10" parent="Trash3" instance=ExtResource("29_k83mh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65242, 0, -0.368989)
 
+[node name="Tree" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.26458, 1.49775, -3.32104)
+
+[node name="Sketchfab_Scene" parent="Tree" instance=ExtResource("40_ryup7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.06037, -8.41153, -5.77982)
+
+[node name="Sketchfab_Scene2" parent="Tree" instance=ExtResource("40_ryup7")]
+transform = Transform3D(0.0656469, 0, 0.997843, 0, 1, 0, -0.997843, 0, 0.0656469, -13.0498, -9.45249, -6.10382)
+
+[node name="Sketchfab_Scene4" parent="Tree" instance=ExtResource("40_ryup7")]
+transform = Transform3D(0.0656469, 0, 0.997843, 0, 1, 0, -0.997843, 0, 0.0656469, -22.0604, -9.45249, -8.289)
+
+[node name="Sketchfab_Scene3" parent="Tree" instance=ExtResource("40_ryup7")]
+transform = Transform3D(0.0656469, 0, 0.997843, 0, 1, 0, -0.997843, 0, 0.0656469, -28.7712, -9.45249, -4.67447)
+
+[node name="Sketchfab_Scene5" parent="Tree" instance=ExtResource("40_ryup7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.18216, -8.41153, 20.7992)
+
+[node name="Sketchfab_Scene6" parent="Tree" instance=ExtResource("40_ryup7")]
+transform = Transform3D(-0.831373, 0, 0.555715, 0, 1, 0, -0.555715, 0, -0.831373, -15.3646, -9.45249, 21.9483)
+
+[node name="Sketchfab_Scene7" parent="Tree" instance=ExtResource("40_ryup7")]
+transform = Transform3D(0.0656469, 0, 0.997843, 0, 1, 0, -0.997843, 0, 0.0656469, -22.0604, -9.45249, 22.035)
+
+[node name="Sketchfab_Scene8" parent="Tree" instance=ExtResource("40_ryup7")]
+transform = Transform3D(0.0656469, 0, 0.997843, 0, 1, 0, -0.997843, 0, 0.0656469, -28.7712, -9.45249, 20.9895)
+
 [node name="Trash_can" parent="." instance=ExtResource("30_qktwf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.75698, 0.284345, 4.20254)
 collision_layer = 5
@@ -557,6 +581,9 @@ dialogue_res = ExtResource("38_yx0jh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="cutscene_trigger"]
 shape = SubResource("BoxShape3D_w44yn")
+
+[node name="Wardrobe Static" parent="." instance=ExtResource("41_ytpkv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.42792, 1.49986, -3.33655)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="Player" method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="cutscene_trigger" to="cutscene_trigger" method="_on_body_entered"]
