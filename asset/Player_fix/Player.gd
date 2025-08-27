@@ -58,6 +58,7 @@ var can_move: bool = true
 @onready var sweep: AudioStreamPlayer3D = $SFX/sweep
 @onready var bed: AudioStreamPlayer3D = $SFX/bed
 @onready var trash: AudioStreamPlayer3D = $SFX/trash
+@onready var locked: AudioStreamPlayer3D = $SFX/locked
 
 
 @onready var fade_rect: ColorRect = $CanvasLayer/FadeRect
@@ -263,7 +264,7 @@ func handle_interaction():
 
 			if is_locked:
 				if Input.is_action_just_pressed("interact"):
-					pickup.play()
+					locked.play()
 				interact_label.text = "Locked"
 				interact_label.visible = true
 				crosshair_ui.visible = false
@@ -277,6 +278,7 @@ func handle_interaction():
 						target.set_meta("locked", false)            # ✅ Optional if used elsewhere
 						target.toggle()                             # ✅ Now toggle works
 						door.play()
+						locked.stop()
 						
 						if held_visual:  # The currently held item node
 							held_visual.queue_free()

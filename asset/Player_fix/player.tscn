@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dtlrsmkxtka2r"]
+[gd_scene load_steps=24 format=3 uid="uid://dtlrsmkxtka2r"]
 
 [ext_resource type="Script" uid="uid://x2d1if8v3wbs" path="res://asset/Player_fix/Player.gd" id="1_l8h54"]
 [ext_resource type="Script" uid="uid://bi1jtmusoy4mm" path="res://asset/Player_fix/hand.gd" id="2_4ntmi"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://cjcqxqxirqruy" path="res://asset/SFX/paper.wav" id="8_iaco7"]
 [ext_resource type="AudioStream" uid="uid://duv25gcp3y7ca" path="res://asset/SFX/pickup.wav" id="9_en0d6"]
 [ext_resource type="AudioStream" uid="uid://cyhj25bvteglm" path="res://asset/SFX/sweep.wav" id="10_4hnge"]
+[ext_resource type="AudioStream" uid="uid://duoja1q3euw56" path="res://asset/SFX/locked.wav" id="11_byoue"]
 [ext_resource type="AudioStream" uid="uid://cj66g26auvcfc" path="res://asset/SFX/bed.wav" id="11_ug86m"]
 [ext_resource type="AudioStream" uid="uid://cu2pl611da8c" path="res://asset/SFX/trash.wav" id="12_4it0c"]
 
@@ -306,6 +307,12 @@ stream = ExtResource("9_en0d6")
 unit_size = 1.0
 max_db = 1.0
 pitch_scale = 0.7
+
+[node name="locked" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("11_byoue")
+unit_size = 1.0
+max_db = 1.0
+pitch_scale = 1.1
 
 [node name="sweep" type="AudioStreamPlayer3D" parent="SFX"]
 stream = ExtResource("10_4hnge")

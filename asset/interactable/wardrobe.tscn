@@ -254,7 +254,6 @@ size = Vector3(0.89624, 0.0427246, 1)
 
 [node name="Door" parent="." instance=ExtResource("1_81t2r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.424583, 0, 0.524858)
-is_locked = false
 
 [node name="Plane_018" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.2769, 0, 0, 0, 0.961262, 0, 0, 0, 0.3, -0.424616, 1.22677, 0.524446)
