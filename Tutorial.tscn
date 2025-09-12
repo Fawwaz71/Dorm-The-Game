@@ -1,0 +1,409 @@
+[gd_scene load_steps=19 format=3 uid="uid://bskj3le1x4xu1"]
+
+[ext_resource type="Texture2D" uid="uid://dofsr6oltabhq" path="res://asset/interactable/item_visuals/image/texture_01.png" id="1_5s8la"]
+[ext_resource type="PackedScene" uid="uid://dtlrsmkxtka2r" path="res://asset/Player_fix/player.tscn" id="1_jl26d"]
+[ext_resource type="PackedScene" uid="uid://cemucjcherkvu" path="res://asset/room/properties/door_interact.tscn" id="3_p3v23"]
+[ext_resource type="PackedScene" uid="uid://csy87yqtq4xjd" path="res://asset/room/properties/desk.tscn" id="4_p3v23"]
+[ext_resource type="PackedScene" uid="uid://c18pyrenghyo1" path="res://asset/interactable/trash object/rigid_key.tscn" id="5_p3v23"]
+[ext_resource type="PackedScene" uid="uid://cb5i0b2o7pgjw" path="res://asset/interactable/trash object/rigid_bottles.tscn" id="6_73or5"]
+[ext_resource type="PackedScene" uid="uid://b6lpdjg7eva8a" path="res://asset/interactable/trash object/trash_can.tscn" id="7_jldhp"]
+[ext_resource type="PackedScene" uid="uid://ds7vwvifbpaon" path="res://asset/interactable/trash object/big_trash_can.tscn" id="8_jldhp"]
+[ext_resource type="PackedScene" uid="uid://b6sadxl6x3alx" path="res://asset/interactable/stain2.tscn" id="9_swigd"]
+[ext_resource type="PackedScene" uid="uid://cf2puy4x3eeyj" path="res://asset/interactable/rigid_broom.tscn" id="10_swigd"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jldhp"]
+sky_top_color = Color(0.688041, 0.661549, 0.641166, 1)
+sky_horizon_color = Color(0.726713, 0.72009, 0.714994, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.726713, 0.72009, 0.714994, 1)
+energy_multiplier = 1.35
+
+[sub_resource type="Sky" id="Sky_tyy4w"]
+sky_material = SubResource("ProceduralSkyMaterial_jldhp")
+
+[sub_resource type="Environment" id="Environment_swigd"]
+background_mode = 1
+background_color = Color(0.703808, 0.703808, 0.703808, 1)
+sky = SubResource("Sky_tyy4w")
+ssao_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fr6qw"]
+albedo_texture = ExtResource("1_5s8la")
+
+[sub_resource type="BoxMesh" id="BoxMesh_p3v23"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_73or5"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hlpnd"]
+albedo_color = Color(0.118581, 0.118581, 0.118581, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_swigd"]
+albedo_texture = ExtResource("1_5s8la")
+
+[node name="Tutorial" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_swigd")
+
+[node name="main" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.293, 0)
+material_override = SubResource("StandardMaterial3D_fr6qw")
+use_collision = true
+collision_layer = 7
+collision_mask = 7
+flip_faces = true
+
+[node name="Hall" type="CSGBox3D" parent="main"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0340347, 0.0278149, -12.7982)
+use_collision = true
+collision_layer = 7
+collision_mask = 7
+flip_faces = true
+size = Vector3(24.5551, 4, 2.94)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="main/Hall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -12.298, -0.792982, 4.65661e-07)
+use_collision = true
+collision_layer = 7
+collision_mask = 7
+flip_faces = true
+size = Vector3(0.838135, 2.40732, 0.611946)
+
+[node name="Label3D6" type="Label3D" parent="main/Hall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.38922, 0.46551, -0.0924795)
+text = "Press Shift To Sprint"
+font_size = 40
+outline_size = 0
+
+[node name="Label3D7" type="Label3D" parent="main/Hall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.38571, 0.46551, -0.0924792)
+text = "Watch Stamina Bar"
+font_size = 40
+outline_size = 0
+
+[node name="Node3D" type="Node3D" parent="main/Hall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.62503, 2.00869, 0.0340352)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="main/Hall/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044238, -0.339968, 0.0198574)
+layers = 7
+light_energy = 3.0
+
+[node name="Lightbox" type="MeshInstance3D" parent="main/Hall/Node3D"]
+transform = Transform3D(0.956052, 0, 0, 0, 0.149184, 0, 0, 0, 0.162503, 0, -0.0318933, 0)
+mesh = SubResource("BoxMesh_p3v23")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_73or5")
+
+[node name="Lightbox3" type="MeshInstance3D" parent="main/Hall/Node3D"]
+transform = Transform3D(1.11345, 0, 0, 0, 0.150428, 0, 0, 0, 0.284476, 0, 0, 0)
+mesh = SubResource("BoxMesh_p3v23")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_hlpnd")
+
+[node name="Node3D2" type="Node3D" parent="main/Hall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6.28313, 2.00869, 0.0340346)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="main/Hall/Node3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044238, -0.339968, 0.0198574)
+layers = 7
+light_energy = 3.0
+
+[node name="Lightbox" type="MeshInstance3D" parent="main/Hall/Node3D2"]
+transform = Transform3D(0.956052, 0, 0, 0, 0.149184, 0, 0, 0, 0.162503, 0, -0.0318933, 0)
+mesh = SubResource("BoxMesh_p3v23")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_73or5")
+
+[node name="Lightbox3" type="MeshInstance3D" parent="main/Hall/Node3D2"]
+transform = Transform3D(1.11345, 0, 0, 0, 0.150428, 0, 0, 0, 0.284476, 0, 0, 0)
+mesh = SubResource("BoxMesh_p3v23")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_hlpnd")
+
+[node name="Node3D3" type="Node3D" parent="main/Hall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -12.4407, -0.802833, -0.419286)
+
+[node name="Door" parent="main/Hall/Node3D3" instance=ExtResource("3_p3v23")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0683784)
+is_locked = false
+
+[node name="Label3D2" type="Label3D" parent="main/Hall"]
+transform = Transform3D(-5.96047e-08, 0, 1, 0, 1, 0, -1, 0, -5.96047e-08, -11.5844, 0.721519, -0.0046998)
+text = "Press E To Interact 
+With Any Object"
+font_size = 30
+outline_size = 0
+
+[node name="Trash Room" type="CSGBox3D" parent="main"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.847871, 0.0278149, -26.9762)
+use_collision = true
+collision_layer = 7
+collision_mask = 7
+flip_faces = true
+size = Vector3(4.81341, 4, 3.47379)
+
+[node name="Cube_056" parent="main/Trash Room" instance=ExtResource("4_p3v23")]
+transform = Transform3D(-0.609042, 0, 1.98451e-07, 0, 0.609042, 0, -1.98451e-07, 0, -0.609042, -1.03008, -1.40028, -1.4381)
+
+[node name="rigid_bottles" parent="main/Trash Room" instance=ExtResource("6_73or5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2576, -0.986055, -1.4625)
+
+[node name="rigid_bottles2" parent="main/Trash Room" instance=ExtResource("6_73or5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.981469, -0.986055, -1.4625)
+
+[node name="rigid_bottles5" parent="main/Trash Room" instance=ExtResource("6_73or5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2576, -0.986055, -1.1899)
+
+[node name="rigid_bottles6" parent="main/Trash Room" instance=ExtResource("6_73or5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.981469, -0.986055, -1.1899)
+
+[node name="rigid_bottles3" parent="main/Trash Room" instance=ExtResource("6_73or5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.779378, -0.986055, -1.3189)
+
+[node name="Trash" parent="main/Trash Room" instance=ExtResource("7_jldhp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.212219, -1.75988, -1.3316)
+collision_layer = 5
+collision_mask = 5
+
+[node name="Big_trash_can" parent="main/Trash Room" instance=ExtResource("8_jldhp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.36865, -1.55553, -1.2391)
+
+[node name="Label3D3" type="Label3D" parent="main/Trash Room"]
+transform = Transform3D(1, 0, 1.58933e-08, 0, 1, 0, -1.58933e-08, 0, 1, -1.01845, -0.175267, -1.42508)
+text = "Put 5 Bottles in 
+Small Trash Can"
+font_size = 25
+outline_size = 0
+
+[node name="Label3D4" type="Label3D" parent="main/Trash Room"]
+transform = Transform3D(1, 0, 1.58933e-08, 0, 1, 0, -1.58933e-08, 0, 1, 0.242558, -1.04482, -1.42508)
+text = "Put Trash Bag in 
+Big Trash Can"
+font_size = 25
+outline_size = 0
+
+[node name="Node3D3" type="Node3D" parent="main/Trash Room"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.69975, 2.00869, 0.0450974)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="main/Trash Room/Node3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044238, -0.339968, 0.0198574)
+layers = 7
+light_energy = 3.0
+
+[node name="Lightbox" type="MeshInstance3D" parent="main/Trash Room/Node3D3"]
+transform = Transform3D(0.956052, 0, 0, 0, 0.149184, 0, 0, 0, 0.162503, 0, -0.0318933, 0)
+mesh = SubResource("BoxMesh_p3v23")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_73or5")
+
+[node name="Lightbox3" type="MeshInstance3D" parent="main/Trash Room/Node3D3"]
+transform = Transform3D(1.11345, 0, 0, 0, 0.150428, 0, 0, 0, 0.284476, 0, 0, 0)
+mesh = SubResource("BoxMesh_p3v23")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_hlpnd")
+
+[node name="Clean Room" type="CSGBox3D" parent="main"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2222, 1.26272, -26.9738)
+use_collision = true
+collision_layer = 7
+collision_mask = 7
+flip_faces = true
+size = Vector3(4.81341, 4, 6.33984)
+
+[node name="Area3D" parent="main/Clean Room" instance=ExtResource("9_swigd")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0.912465, -1.99613, -0.375402)
+
+[node name="Area3D2" parent="main/Clean Room" instance=ExtResource("9_swigd")]
+transform = Transform3D(0.941529, 0, -0.336931, 0, 1, 0, 0.336931, 0, 0.941529, 0.594035, -1.99186, 1.77725)
+
+[node name="Area3D3" parent="main/Clean Room" instance=ExtResource("9_swigd")]
+transform = Transform3D(0.990672, 0, 0.136269, 0, 1, 0, -0.136269, 0, 0.990672, -1.4738, -1.99186, -1.8312)
+
+[node name="RigidBody3D" parent="main/Clean Room" instance=ExtResource("10_swigd")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.69442, -1.78952, -0.0263023)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="main/Clean Room"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.53184, -0.792982, 0.0259018)
+use_collision = true
+collision_layer = 7
+collision_mask = 7
+flip_faces = true
+size = Vector3(0.838135, 2.40732, 0.611946)
+
+[node name="Node3D4" type="Node3D" parent="main/Clean Room"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.163405, 2.00869, 0.0450974)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="main/Clean Room/Node3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044238, -0.339968, 0.0198574)
+layers = 7
+light_energy = 3.0
+
+[node name="Lightbox" type="MeshInstance3D" parent="main/Clean Room/Node3D4"]
+transform = Transform3D(0.956052, 0, 0, 0, 0.149184, 0, 0, 0, 0.162503, 0, -0.0318933, 0)
+mesh = SubResource("BoxMesh_p3v23")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_73or5")
+
+[node name="Lightbox3" type="MeshInstance3D" parent="main/Clean Room/Node3D4"]
+transform = Transform3D(1.11345, 0, 0, 0, 0.150428, 0, 0, 0, 0.284476, 0, 0, 0)
+mesh = SubResource("BoxMesh_p3v23")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_hlpnd")
+
+[node name="Node3D5" type="Node3D" parent="main/Clean Room"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.5202, -0.822775, 0.453815)
+
+[node name="Door2" parent="main/Clean Room/Node3D5" instance=ExtResource("3_p3v23")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0044117, 0.0181596, 0)
+door_id = "1"
+is_locked = false
+
+[node name="Key Room" type="CSGBox3D" parent="main"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 11.2222, 1.26272, -21.0343)
+use_collision = true
+collision_layer = 7
+collision_mask = 7
+flip_faces = true
+size = Vector3(4.81341, 4, 6.33984)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="main/Key Room"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.53184, -0.792982, 0.0259018)
+use_collision = true
+collision_layer = 7
+collision_mask = 7
+flip_faces = true
+size = Vector3(0.838135, 2.40732, 0.611946)
+
+[node name="Node3D4" type="Node3D" parent="main/Key Room"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.163405, 2.00869, 0.0450974)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="main/Key Room/Node3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044238, -0.339968, 0.0198574)
+layers = 7
+light_energy = 3.0
+
+[node name="Lightbox" type="MeshInstance3D" parent="main/Key Room/Node3D4"]
+transform = Transform3D(0.956052, 0, 0, 0, 0.149184, 0, 0, 0, 0.162503, 0, -0.0318933, 0)
+mesh = SubResource("BoxMesh_p3v23")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_73or5")
+
+[node name="Lightbox3" type="MeshInstance3D" parent="main/Key Room/Node3D4"]
+transform = Transform3D(1.11345, 0, 0, 0, 0.150428, 0, 0, 0, 0.284476, 0, 0, 0)
+mesh = SubResource("BoxMesh_p3v23")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_hlpnd")
+
+[node name="Node3D5" type="Node3D" parent="main/Key Room"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.5202, -0.822775, 0.453815)
+
+[node name="Door2" parent="main/Key Room/Node3D5" instance=ExtResource("3_p3v23")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0044117, 0.0181596, 0)
+door_id = "1"
+is_locked = false
+
+[node name="Cube_055" parent="main/Key Room" instance=ExtResource("4_p3v23")]
+transform = Transform3D(0.609042, 0, -1.45207e-07, 0, 0.609042, 0, 1.45207e-07, 0, 0.609042, 0.518663, -1.35877, 2.50627)
+
+[node name="rigid_key" parent="main/Key Room" instance=ExtResource("5_p3v23")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.739361, -0.911443, 2.41292)
+key_id = "1"
+
+[node name="rigid_key2" parent="main/Key Room" instance=ExtResource("5_p3v23")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.378056, -0.911443, 2.41292)
+key_id = "1"
+
+[node name="Main Room" type="CSGBox3D" parent="main"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.96614)
+material_override = SubResource("StandardMaterial3D_fr6qw")
+use_collision = true
+collision_layer = 7
+collision_mask = 7
+flip_faces = true
+size = Vector3(5, 4, 5)
+
+[node name="Player" parent="main/Main Room" instance=ExtResource("1_jl26d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8479, 1.89349)
+
+[node name="Node3D2" type="Node3D" parent="main/Main Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0365, -0.124568)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="main/Main Room/Node3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044238, -0.339968, 0.0198574)
+light_energy = 3.0
+
+[node name="Lightbox" type="MeshInstance3D" parent="main/Main Room/Node3D2"]
+transform = Transform3D(0.956052, 0, 0, 0, 0.149184, 0, 0, 0, 0.162503, 0, -0.0318933, 0)
+mesh = SubResource("BoxMesh_p3v23")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_73or5")
+
+[node name="Lightbox3" type="MeshInstance3D" parent="main/Main Room/Node3D2"]
+transform = Transform3D(1.11345, 0, 0, 0, 0.150428, 0, 0, 0, 0.284476, 0, 0, 0)
+mesh = SubResource("BoxMesh_p3v23")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_hlpnd")
+
+[node name="Label3D5" type="Label3D" parent="main/Main Room"]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -1.59767, 0.193242, -1.26447)
+text = "Use W,A,S,D
+to Move"
+font_size = 40
+outline_size = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="main/Main Room"]
+root_node = NodePath("../../..")
+
+[node name="Stair Hall" type="CSGBox3D" parent="main"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.823, 0, -26.975)
+flip_faces = true
+size = Vector3(5.336, 4, 2.78)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="main/Stair Hall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16342, -0.946864, 0)
+material_override = SubResource("StandardMaterial3D_swigd")
+operation = 2
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+flip_faces = true
+size = Vector3(1, 0.417, 2.78)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="main/Stair Hall/CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.502201, -0.419989, 0)
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+flip_faces = true
+size = Vector3(2, 0.417, 2.78)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="main/Stair Hall/CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.00198, -0.84002, 0)
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+flip_faces = true
+size = Vector3(3, 0.417, 2.78)
+
+[node name="Label3D5" type="Label3D" parent="main/Stair Hall"]
+transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, -1.90009, -0.300017, -0.823246)
+text = "Press Space To Jump"
+font_size = 25
+outline_size = 0
+
+[node name="Label3D6" type="Label3D" parent="main/Stair Hall"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 7.26334, 1.43866, 0.0155411)
+text = "Some Object Can Do Certain Task"
+font_size = 25
+outline_size = 0
+
+[node name="Label3D7" type="Label3D" parent="main/Stair Hall"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5.38545, 1.99807, 2.61177)
+text = "TO Throw Item Press Q"
+font_size = 25
+outline_size = 0
+
+[connection signal="animation_finished" from="main/Main Room/AnimationPlayer" to="main/Main Room/Player" method="_on_animation_player_animation_finished"]

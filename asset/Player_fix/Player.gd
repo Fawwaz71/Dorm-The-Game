@@ -22,8 +22,8 @@ var gravity := 9.8
 # === Stamina ===
 var stamina := 5.0
 const MAX_STAMINA := 5.0
-const STAMINA_DRAIN_RATE := 1.0
-const STAMINA_RECOVERY_RATE := 0.7
+const STAMINA_DRAIN_RATE := 1.4
+const STAMINA_RECOVERY_RATE := 0.85
 var is_exhausted := false
 
 var in_bed_camera := false

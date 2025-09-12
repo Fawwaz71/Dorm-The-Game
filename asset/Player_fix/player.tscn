@@ -312,7 +312,7 @@ pitch_scale = 0.7
 stream = ExtResource("11_byoue")
 unit_size = 1.0
 max_db = 1.0
-pitch_scale = 1.1
+pitch_scale = 0.9
 
 [node name="sweep" type="AudioStreamPlayer3D" parent="SFX"]
 stream = ExtResource("10_4hnge")
