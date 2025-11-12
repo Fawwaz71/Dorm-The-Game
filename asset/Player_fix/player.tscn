@@ -116,6 +116,9 @@ collision_mask = 7
 target_position = Vector3(0, 0, -1)
 collision_mask = 7
 
+[node name="HandTarget" type="Marker3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0047035217, -2.4831827)
+
 [node name="hand" type="Node3D" parent="Head/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.495, -0.747426, -0.984161)
 script = ExtResource("2_4ntmi")

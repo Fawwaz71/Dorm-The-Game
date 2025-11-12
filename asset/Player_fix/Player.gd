@@ -32,6 +32,12 @@ var sleep_label_shown := false
 
 var was_walking = false
 var can_move: bool = true
+
+var grid_size = 0.2
+var ghost_block : Node3D = null
+var objects = []
+var current_object_index = 0
+
 # === Nodes ===
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
@@ -47,6 +53,7 @@ var can_move: bool = true
 @onready var color_rect: ColorRect = $CanvasLayer/ColorRect
 @onready var small_target: RayCast3D = $Head/Camera3D/small_target
 @onready var light: SpotLight3D = $Head/Camera3D/SpotLight3D
+@onready var hand_target: Marker3D = $Head/Camera3D/HandTarget
 
 #audio
 @onready var footstep_walk: AudioStreamPlayer3D = $SFX/footstep_walk
@@ -140,6 +147,36 @@ func _ready():
 
 	# Play initial cutscene
 	play_cutscene("enter")
+	
+	objects.append(preload("res://asset/BuildObject/Table.tscn"))
+	objects.append(preload("res://asset/BuildObject/wardrobe.tscn"))
+
+func building(_delta):
+	var snap_pos: Vector3 = snap_to_grid(hand_target.global_position, grid_size)
+	ghost_block.global_position = ghost_block.global_position.lerp(snap_pos, 0.1)
+	
+	if Input.is_action_just_pressed("rotate"):
+		ghost_block.rotation.y += deg_to_rad(90)
+		
+	if Input.is_action_just_pressed("left_click") and ghost_block.can_place:
+		var block_instance = objects[current_object_index].instantiate()
+		get_parent().add_child(block_instance)
+		block_instance.place()
+		block_instance.global_transform.origin = snap_to_grid(ghost_block.global_transform.origin, grid_size)
+		block_instance.global_rotation = ghost_block.global_rotation
+
+
+func snap_to_grid(pos: Vector3, grid_snap: float) -> Vector3:
+	var x = round(pos.x/grid_snap) * grid_snap
+	var y = round(pos.y/grid_snap) * grid_snap
+	var z = round(pos.z/grid_snap) * grid_snap
+	return Vector3(x, y, z)
+
+func spawn_ghost_block():
+	ghost_block = objects [current_object_index].instantiate()
+	get_parent().add_child(ghost_block)
+	ghost_block.global_position= self.global_position
+	ghost_block.global_position.y -= 1.0
 
 func _unhandled_input(event):
 	if input_locked:
@@ -220,7 +257,50 @@ func _physics_process(delta):
 
 	last_position = current_position
 	
+	
+	if Input.is_action_just_pressed("Build"):
+		if ghost_block:
+			ghost_block.destroy()
+			ghost_block = null
+		else:
+			spawn_ghost_block()
+
+	if ghost_block:
+		building(delta)
+		if Input.is_action_just_pressed("next_item"):
+			object_change(1)
+		elif Input.is_action_just_pressed("previous_item"):
+			object_change(-1)
+		
+	elif raycast.is_colliding():
+		var collider = raycast.get_collider()
+		if Input.is_action_just_pressed("right_click"):
+			if collider and collider.is_in_group("Object"):
+				if collider.has_method("destroy"):
+					collider.destroy()
+				else:
+					print("Collider has no destroy() method")
+
+	
+	
 	move_and_slide()
+
+func object_change(direction: int):
+	if ghost_block:
+		ghost_block.queue_free()
+
+	current_object_index += direction
+
+	# Wrap around correctly
+	if current_object_index < 0:
+		current_object_index = objects.size() - 1
+	elif current_object_index >= objects.size():
+		current_object_index = 0
+
+	spawn_ghost_block()
+
+
+
 
 func _process(_delta):
 	camera_3d.global_transform = camera.global_transform
@@ -257,7 +337,7 @@ func handle_interaction():
 				pickup.play()
 
 		# Toggle interaction
-		elif target.has_method("toggle"):
+		elif target and target.has_method("toggle"):
 			var is_locked = target.has_meta("locked") and target.get_meta("locked")
 			var door_key_id = target.get_meta("key_id") if target.has_meta("key_id") else null
 			var player_key_id = held_visual.get_meta("key_id") if held_visual and held_visual.has_meta("key_id") else null
@@ -294,7 +374,7 @@ func handle_interaction():
 					target.toggle()
 					door.play()
 
-		elif target.has_method("try_clean"):
+		elif target and target.has_method("try_clean"):
 			if held_visual and held_visual.has_method("try_clean"):
 				interact_label.text = "Press E to Clean"
 				interact_label.visible = true
@@ -304,7 +384,7 @@ func handle_interaction():
 						target.try_clean("broom")
 						sweep.play()
 						
-		elif target.has_method("view"):
+		elif target and target.has_method("view"):
 			interact_label.text = "Press E to View"
 			interact_label.visible = true
 			crosshair_ui.visible = false
@@ -379,7 +459,7 @@ func handle_interaction():
 						trash.play()
 					print("big trash thrown. Count: ", big_trash_counter)
 					
-		elif target.name == "light":
+		elif target and target.name == "light":
 			interact_label.text = "Press E to Equip light"
 			interact_label.visible = true
 			crosshair_ui.visible = false
@@ -390,7 +470,7 @@ func handle_interaction():
 				
 					
 		elif not in_bed_camera:
-			if target.is_in_group("sleepable") or target.name =="Bed":
+			if target and (target.is_in_group("sleepable") or target.name == "Bed"):
 				interact_label.text = "Press E to Sleep"
 				interact_label.visible = true
 				crosshair_ui.visible = false

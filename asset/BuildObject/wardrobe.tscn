@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://cydbr5yi0qjth"]
+
+[ext_resource type="Script" uid="uid://donvex8q14um5" path="res://asset/BuildObject/Object.gd" id="1_ukjjj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_m50fs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_olfte"]
+size = Vector3(0.7, 0.7, 0.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ukjjj"]
+
+[node name="Wardrobe" type="StaticBody3D" groups=["Object", "mesh_parts"]]
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("1_ukjjj")
+
+[node name="Model" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_m50fs")
+
+[node name="ClippingHitbox" type="Area3D" parent="."]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="ClippingHitbox"]
+shape = SubResource("BoxShape3D_olfte")
+
+[node name="FloatingHitbox" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FloatingHitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00061130524, -0.0072060823)
+shape = SubResource("BoxShape3D_ukjjj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_olfte")
+disabled = true
