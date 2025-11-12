@@ -153,17 +153,43 @@ func _ready():
 
 func building(_delta):
 	var snap_pos: Vector3 = snap_to_grid(hand_target.global_position, grid_size)
+
+	# --- Floor snapping ---
+	var floor_y = get_floor_height(snap_pos)
+	var mesh: MeshInstance3D = ghost_block.get_node_or_null("Model")
+	if mesh:
+		snap_pos.y = floor_y + mesh.get_aabb().size.y / 2.0
+	else:
+		snap_pos.y = floor_y
+
+	# Smooth ghost movement
 	ghost_block.global_position = ghost_block.global_position.lerp(snap_pos, 0.1)
 	
+	# Rotation control
 	if Input.is_action_just_pressed("rotate"):
 		ghost_block.rotation.y += deg_to_rad(90)
 		
+	# Placement
 	if Input.is_action_just_pressed("left_click") and ghost_block.can_place:
 		var block_instance = objects[current_object_index].instantiate()
 		get_parent().add_child(block_instance)
 		block_instance.place()
 		block_instance.global_transform.origin = snap_to_grid(ghost_block.global_transform.origin, grid_size)
 		block_instance.global_rotation = ghost_block.global_rotation
+
+func get_floor_height(start_pos: Vector3) -> float:
+	var space_state = get_world_3d().direct_space_state
+	var ray_start = start_pos + Vector3(0, 2, 0)
+	var ray_end = start_pos + Vector3(0, -5, 0)
+
+	var query = PhysicsRayQueryParameters3D.create(ray_start, ray_end)
+	query.exclude = [ghost_block]
+
+	var result = space_state.intersect_ray(query)
+	if result:
+		return result.position.y
+	else:
+		return start_pos.y  # fallback if no floor hit
 
 
 func snap_to_grid(pos: Vector3, grid_snap: float) -> Vector3:
