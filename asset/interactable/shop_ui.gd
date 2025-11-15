@@ -4,15 +4,24 @@ signal buy_item(item_id: String, quantity: int)
 signal exit_shop()
 
 var shop_items: Array[Dictionary] = [
-	{"id": "acoustic", "name": "Guitar (Acoustic)", "price": 50, "icon": "res://icon.png"},
-	{"id": "guitar", "name": "Guitar (Electric)", "price": 10, "icon": "res://icon.png"},
-	{"id": "acoustic2", "name": "Guitar (Acoustic)", "price": 50, "icon": "res://icon.png"},
-	{"id": "guitar2", "name": "Guitar (Electric)", "price": 10, "icon": "res://icon.png"},
-	{"id": "acoustic3", "name": "Guitar (Acoustic)", "price": 50, "icon": "res://icon.png"},
-	{"id": "guitar3", "name": "Guitar (Electric)", "price": 10, "icon": "res://icon.png"},
-	{"id": "acoustic4", "name": "Guitar (Acoustic)", "price": 50, "icon": "res://icon.png"},
-	{"id": "guitar4", "name": "Guitar (Electric)", "price": 10, "icon": "res://icon.png"}
+	{"id": "acoustic", "name": "Acoustic", "price": 50, "icon": "res://icon.png"},
+	{"id": "electric", "name": "Electric", "price": 100, "icon": "res://icon.png"},
+	{"id": "acoustic2", "name": "Acoustic 2", "price": 55, "icon": "res://icon.png"},
+	{"id": "electric2", "name": "Electric 2", "price": 110, "icon": "res://icon.png"},
+	{"id": "acoustic3", "name": "Acoustic 3", "price": 60, "icon": "res://icon.png"},
+	{"id": "electric3", "name": "Electric 3", "price": 120, "icon": "res://icon.png"},
+	{"id": "acoustic4", "name": "Acoustic 4", "price": 65, "icon": "res://icon.png"},
+	{"id": "electric4", "name": "Electric 4", "price": 130, "icon": "res://icon.png"},
+	{"id": "bass1", "name": "Bass 1", "price": 80, "icon": "res://icon.png"},
+	{"id": "bass2", "name": "Bass 2", "price": 90, "icon": "res://icon.png"},
+	{"id": "keyboard1", "name": "Keys 1", "price": 150, "icon": "res://icon.png"},
+	{"id": "keyboard2", "name": "Keys 2", "price": 160, "icon": "res://icon.png"},
+	{"id": "drums1", "name": "Drums 1", "price": 200, "icon": "res://icon.png"},
+	{"id": "drums2", "name": "Drums 2", "price": 220, "icon": "res://icon.png"},
+	{"id": "mic1", "name": "Mic 1", "price": 25, "icon": "res://icon.png"},
+	{"id": "mic2", "name": "Mic 2", "price": 30, "icon": "res://icon.png"}
 ]
+
 
 @onready var money_label: Label = $PanelContainer/MarginContainer/VBoxContainer/MoneyLabel
 @onready var items_grid: GridContainer = $PanelContainer/MarginContainer/VBoxContainer/GridContainer
@@ -22,18 +31,18 @@ var shop_items: Array[Dictionary] = [
 var cart: Dictionary[String, int] = {}
 var quantities: Dictionary[String, int] = {}
 
+# _ready() in shop UI
 func _ready() -> void:
 	visible = false
-	# Ensure cart and quantities are correctly initialized for *unique* IDs
+	# Initialize cart & quantities
 	var unique_ids = {}
 	for item in shop_items:
 		unique_ids[item.id] = true
-	
 	for id in unique_ids.keys():
 		cart[id] = 0
-		quantities[id] = 0 # INITIAL QUANTITY SET TO 0
-	
-	# Set GridContainer to center horizontally (FIX 2)
+		quantities[id] = 0
+
+	# Set GridContainer to center horizontally
 	items_grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	items_grid.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 
@@ -42,6 +51,11 @@ func _ready() -> void:
 	exit_button.pressed.connect(_on_press_exit)
 	buy_button.pressed.connect(_on_buy_pressed)
 	buy_button.visible = false
+
+	# Pass player money here
+	var player_money = 100  # replace with actual player.money variable if available
+	_update_money_label(player_money)
+
 
 func _set_small_button_style(btn: Button) -> void:
 	btn.focus_mode = Control.FOCUS_NONE
@@ -73,21 +87,20 @@ func _set_small_button_style(btn: Button) -> void:
 func _create_item_box(item: Dictionary) -> Panel:
 	var panel = Panel.new()
 	var style = StyleBoxFlat.new()
-	style.bg_color = Color("#222A3A") # dark background
+	style.bg_color = Color("#222A3A")
 	style.corner_radius_top_left = 10
 	style.corner_radius_top_right = 10
 	style.corner_radius_bottom_left = 10
 	style.corner_radius_bottom_right = 10
 	panel.add_theme_stylebox_override("panel", style)
-	panel.custom_minimum_size = Vector2(150, 150)
+	panel.custom_minimum_size = Vector2(90, 120)
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
-	# Use a MarginContainer for padding inside the item box
 	var margin = MarginContainer.new()
-	margin.add_theme_constant_override("margin_left", 8)
-	margin.add_theme_constant_override("margin_right", 8)
-	margin.add_theme_constant_override("margin_top", 8)
-	margin.add_theme_constant_override("margin_bottom", 8)
+	margin.add_theme_constant_override("margin_left", 4)
+	margin.add_theme_constant_override("margin_right", 4)
+	margin.add_theme_constant_override("margin_top", 4)
+	margin.add_theme_constant_override("margin_bottom", 4)
 	panel.add_child(margin)
 
 	var vbox = VBoxContainer.new()
@@ -95,77 +108,73 @@ func _create_item_box(item: Dictionary) -> Panel:
 	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	margin.add_child(vbox)
 
-
-	# Icon (FIX 1: Ensure icon is added to the VBoxContainer)
+	# Icon
 	var icon = TextureRect.new()
 	var tex = load(item.icon)
 	if tex != null and tex is Texture2D:
 		icon.texture = tex
-	else:
-		# Use a default placeholder color if icon is not found
-		var placeholder = StyleBoxFlat.new()
-		placeholder.bg_color = Color.GRAY
-		icon.add_theme_stylebox_override("panel", placeholder)
-		push_error("Failed to load texture: " + str(item.icon))
-
 	icon.expand = true
-	icon.stretch_mode = TextureRect.STRETCH_SCALE
-	icon.custom_minimum_size = Vector2(48, 48)
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.custom_minimum_size = Vector2(32, 32)
 	icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	icon.size_flags_vertical = Control.SIZE_EXPAND # Allow icon to take up available vertical space
-	vbox.add_child(icon) # <--- ICON ADDED HERE
+	icon.size_flags_vertical = Control.SIZE_EXPAND
+	vbox.add_child(icon)
 
 	# Name
 	var title = Label.new()
 	title.text = item.name
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 14)
 	vbox.add_child(title)
 
 	# Price
 	var price = Label.new()
 	price.text = "$%d" % item.price
 	price.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	price.add_theme_font_size_override("font_size", 10)
 	vbox.add_child(price)
 
 	# Quantity controls
 	var hbox = HBoxContainer.new()
-	# Set to shrink to its content size and then center itself within the VBoxContainer (FIX)
-	hbox.size_flags_horizontal = Control.SIZE_SHRINK_CENTER 
-	hbox.add_theme_constant_override("separation", 5) # Small separation for buttons
+	hbox.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	hbox.add_theme_constant_override("separation", 4)
 
 	var minus_btn = Button.new()
 	minus_btn.text = "-"
 	_set_small_button_style(minus_btn)
 	hbox.add_child(minus_btn)
 
+	# Only one qty_lbl
 	var qty_lbl = Label.new()
-	qty_lbl.text = str(quantities.get(item.id, 0)) # Set default quantity label to 0
-	qty_lbl.custom_minimum_size = Vector2(20, 20)
-	# NOTE: The label is already centered within its space, but with the hbox changes,
-	# it uses its minimum size, making the whole control block look centered.
-	qty_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER 
+	qty_lbl.text = str(quantities.get(item.id, 0))
+	qty_lbl.custom_minimum_size = Vector2(16, 16)
+	qty_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	qty_lbl.add_theme_font_size_override("font_size", 10)
 	hbox.add_child(qty_lbl)
 
 	var plus_btn = Button.new()
 	plus_btn.text = "+"
 	_set_small_button_style(plus_btn)
 	hbox.add_child(plus_btn)
+
 	vbox.add_child(hbox)
 
-	# Signals for quantity buttons
+	# Button signals
 	plus_btn.pressed.connect(func() -> void:
 		quantities[item.id] += 1
 		cart[item.id] = quantities[item.id]
 		qty_lbl.text = str(quantities[item.id])
 		_on_checkout_pressed()
 	)
+
 	minus_btn.pressed.connect(func() -> void:
-		if quantities[item.id] > 0: # Check > 0 instead of > 1 to allow reset to 0
+		if quantities[item.id] > 0:
 			quantities[item.id] -= 1
 			cart[item.id] = quantities[item.id]
 			qty_lbl.text = str(quantities[item.id])
 			_on_checkout_pressed()
 	)
+
 	return panel
 
 
@@ -220,3 +229,7 @@ func _on_press_exit() -> void:
 
 func set_money_text(value: int) -> void:
 	money_label.text = "Money: $" + str(value)
+
+
+func _update_money_label(player_money: int = 0) -> void:
+	money_label.text = "Money: $" + str(player_money)

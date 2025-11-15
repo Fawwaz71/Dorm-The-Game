@@ -792,6 +792,10 @@ func open_shop_ui():
 
 	fade_anim.play("fade_in")
 	await fade_anim.animation_finished
+	if shop_ui:
+		shop_ui.visible = true
+		# Update money immediately when shop opens
+		shop_ui._update_money_label(money)
 
 
 func close_shop_ui():

@@ -333,7 +333,7 @@ theme_override_font_sizes/font_size = 20
 layout_mode = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
-columns = 4
+columns = 7
 
 [node name="BuyButton" type="Button" parent="CanvasLayer/ShopUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
