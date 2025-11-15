@@ -326,7 +326,7 @@ flip_faces = true
 size = Vector3(5, 4, 5)
 
 [node name="Player" parent="main/Main Room" instance=ExtResource("1_jl26d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.37037444, 1.8934901)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8479, 1.89349)
 
 [node name="Node3D2" type="Node3D" parent="main/Main Room"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0365, -0.124568)

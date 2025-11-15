@@ -152,7 +152,7 @@ shadow_mesh = SubResource("ArrayMesh_swtxs")
 size = Vector3(1, 0.83847415, 0.707)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nh8ve"]
-size = Vector3(1.0292969, 0.9248047, 0.85839844)
+size = Vector3(1.0292969, 0.8967285, 0.85839844)
 
 [node name="Table" type="StaticBody3D" groups=["Object"]]
 collision_layer = 7
@@ -188,5 +188,5 @@ shape = SubResource("BoxShape3D_pox4s")
 [node name="FloatingHitbox" type="Area3D" parent="."]
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="FloatingHitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.20540366, 0.07218361)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.19136557, 0.07218361)
 shape = SubResource("BoxShape3D_nh8ve")

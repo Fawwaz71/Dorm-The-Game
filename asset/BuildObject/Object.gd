@@ -12,9 +12,13 @@ var can_place: bool = true
 
 func _process(_delta: float) -> void:
 	if clipping_hitbox:
-		can_place = clipping_hitbox.get_overlapping_bodies().is_empty() and not floating_hitbox.get_overlapping_bodies().is_empty()
+		# Ignore the floor in collisions
+		var overlaps = clipping_hitbox.get_overlapping_bodies()
+		var filtered = overlaps.filter(func(b): return not b.is_in_group("ground"))
+		can_place = filtered.is_empty()
 		model.transparency = 0.6
 		_update_material(can_place)
+
 
 
 func _update_material(placeable: bool) -> void:

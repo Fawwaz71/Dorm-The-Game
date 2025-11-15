@@ -335,6 +335,10 @@ theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 4
 
+[node name="CheckoutButton" type="Button" parent="CanvasLayer/ShopUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Checkout"
+
 [node name="BuyButton" type="Button" parent="CanvasLayer/ShopUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 

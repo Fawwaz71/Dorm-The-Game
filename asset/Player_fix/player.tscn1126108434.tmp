@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dtlrsmkxtka2r"]
+[gd_scene load_steps=29 format=3 uid="uid://dtlrsmkxtka2r"]
 
 [ext_resource type="Script" uid="uid://x2d1if8v3wbs" path="res://asset/Player_fix/Player.gd" id="1_l8h54"]
 [ext_resource type="Script" uid="uid://bi1jtmusoy4mm" path="res://asset/Player_fix/hand.gd" id="2_4ntmi"]
@@ -96,6 +96,9 @@ texture = ExtResource("6_q603r")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q603r"]
 bg_color = Color(0.9049494, 0, 0.034373827, 1)
 border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2d33o"]
+bg_color = Color(0.7666196, 0.76661956, 0.76661944, 1)
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
@@ -329,14 +332,15 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
 
-[node name="GridContainer" type="GridContainer" parent="CanvasLayer/ShopUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/ShopUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2d33o")
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/ShopUI/PanelContainer/MarginContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 4
-
-[node name="BuyButton" type="Button" parent="CanvasLayer/ShopUI/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
 
 [node name="SFX" type="Node3D" parent="."]
 

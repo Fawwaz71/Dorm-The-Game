@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dtlrsmkxtka2r"]
+[gd_scene load_steps=25 format=3 uid="uid://dtlrsmkxtka2r"]
 
 [ext_resource type="Script" uid="uid://x2d1if8v3wbs" path="res://asset/Player_fix/Player.gd" id="1_l8h54"]
 [ext_resource type="Script" uid="uid://bi1jtmusoy4mm" path="res://asset/Player_fix/hand.gd" id="2_4ntmi"]
@@ -7,7 +7,6 @@
 [ext_resource type="Shader" uid="uid://cr0sgxwsmghke" path="res://asset/Player_fix/CRT.gdshader" id="4_w70i0"]
 [ext_resource type="Script" uid="uid://c3xhojfowyfmt" path="res://asset/interactable/shop_ui.gd" id="5_pene0"]
 [ext_resource type="AudioStream" uid="uid://coi5d6lh7k75b" path="res://asset/SFX/run.wav" id="5_wcfnn"]
-[ext_resource type="Texture2D" uid="uid://c78mme0g7eh3d" path="res://asset/interactable/Shop.xyz.png" id="6_q603r"]
 [ext_resource type="AudioStream" uid="uid://bdt5ojp401ghy" path="res://asset/SFX/jump.wav" id="6_wcfnn"]
 [ext_resource type="AudioStream" uid="uid://bocbxs7n0swfc" path="res://asset/SFX/door.wav" id="7_4ssyf"]
 [ext_resource type="AudioStream" uid="uid://cjcqxqxirqruy" path="res://asset/SFX/paper.wav" id="8_iaco7"]
@@ -89,13 +88,6 @@ bg_color = Color(0.374564, 0.366481, 0.344614, 1)
 bg_color = Color(0.219608, 0.717647, 0, 1)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_4flbx"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2d33o"]
-texture = ExtResource("6_q603r")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q603r"]
-bg_color = Color(0.9049494, 0, 0.034373827, 1)
-border_color = Color(1, 1, 1, 1)
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
@@ -279,6 +271,7 @@ grow_vertical = 2
 texture = SubResource("CanvasTexture_4flbx")
 
 [node name="ShopUI" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -288,55 +281,43 @@ grow_vertical = 2
 script = ExtResource("5_pene0")
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/ShopUI"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -576.0
-offset_right = 576.0
-offset_bottom = 648.0
-grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_2d33o")
+layout_mode = 0
+offset_right = 1150.0
+offset_bottom = 647.0
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/ShopUI/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ShopUI/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ShopUI/PanelContainer"]
 layout_mode = 2
 
-[node name="ExitButton" type="Button" parent="CanvasLayer/ShopUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/ShopUI/PanelContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("StyleBoxFlat_q603r")
-text = "  X  "
-
-[node name="Label" type="Label" parent="CanvasLayer/ShopUI/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0.2159017, 0.21590173, 0.2159017, 0)
-theme_override_constants/shadow_offset_x = 191
-theme_override_constants/shadow_offset_y = 341
-theme_override_constants/shadow_outline_size = 706
 theme_override_font_sizes/font_size = 40
+text = "PC Shop"
 horizontal_alignment = 1
 
-[node name="MoneyLabel" type="Label" parent="CanvasLayer/ShopUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MoneyLabel" type="Label" parent="CanvasLayer/ShopUI/PanelContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 25
 
-[node name="GridContainer" type="GridContainer" parent="CanvasLayer/ShopUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/ShopUI/PanelContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/h_separation = 8
-theme_override_constants/v_separation = 8
-columns = 4
 
-[node name="BuyButton" type="Button" parent="CanvasLayer/ShopUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/ShopUI/PanelContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
+columns = 3
+
+[node name="ItemList" type="VBoxContainer" parent="CanvasLayer/ShopUI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ShopUI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ExitButton" type="Button" parent="CanvasLayer/ShopUI/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_font_sizes/font_size = 35
+text = "Exit"
 
 [node name="SFX" type="Node3D" parent="."]
 

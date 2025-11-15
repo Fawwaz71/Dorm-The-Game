@@ -33,7 +33,7 @@ var sleep_label_shown := false
 var was_walking = false
 var can_move: bool = true
 
-var grid_size = 0.2
+var grid_size = 0.1
 var ghost_block : Node3D = null
 var objects = []
 var current_object_index = 0
@@ -71,7 +71,8 @@ var current_object_index = 0
 @onready var fade_rect: ColorRect = $CanvasLayer/FadeRect
 @onready var fade_anim: AnimationPlayer = $CanvasLayer/FadeAnim
 
-
+@onready var shop_ui: Control = $CanvasLayer/ShopUI
+@onready var shop_script := shop_ui  # the ShopUI node (the node that emits buy_item / exit_shop)
 
 # === Preloads (must be constants) ===
 const ACOUSTIC_VISUAL = preload("res://asset/interactable/item_visuals/acoustic_visual.tscn")
@@ -158,17 +159,20 @@ func building(_delta):
 	var floor_y = get_floor_height(snap_pos)
 	var mesh: MeshInstance3D = ghost_block.get_node_or_null("Model")
 	if mesh:
-		snap_pos.y = floor_y + mesh.get_aabb().size.y / 2.0
+		var aabb = mesh.get_aabb()
+		# Offset so bottom sits slightly above floor
+		var bottom_offset = -aabb.position.y * mesh.scale.y + 0.05  # add 0.05 to lift a bit
+		snap_pos.y = floor_y + bottom_offset
 	else:
 		snap_pos.y = floor_y
 
 	# Smooth ghost movement
 	ghost_block.global_position = ghost_block.global_position.lerp(snap_pos, 0.1)
-	
+
 	# Rotation control
 	if Input.is_action_just_pressed("rotate"):
 		ghost_block.rotation.y += deg_to_rad(90)
-		
+
 	# Placement
 	if Input.is_action_just_pressed("left_click") and ghost_block.can_place:
 		var block_instance = objects[current_object_index].instantiate()
@@ -176,6 +180,14 @@ func building(_delta):
 		block_instance.place()
 		block_instance.global_transform.origin = snap_to_grid(ghost_block.global_transform.origin, grid_size)
 		block_instance.global_rotation = ghost_block.global_rotation
+
+
+	if shop_ui:
+		# Godot 4 style: connect signals to Callables
+		shop_script.buy_item.connect(Callable(self, "_on_shop_buy_item"))
+		shop_script.exit_shop.connect(Callable(self, "_on_shop_exit"))
+	shop_ui.visible = false
+
 
 func get_floor_height(start_pos: Vector3) -> float:
 	var space_state = get_world_3d().direct_space_state
@@ -351,9 +363,13 @@ func handle_interaction():
 	interact_label.visible = false
 	crosshair_ui.visible = true
 	
+
 	if raycast.is_colliding():
 		var target = raycast.get_collider()
 		# Pickup item
+		print("Raycast hit:", target)
+		print("Groups:", target.get_groups())
+
 		if held_visual == null and target is RigidBody3D and target.is_in_group("pickable"):
 			interact_label.text = "Press E to Pick Up"
 			interact_label.visible = true
@@ -513,6 +529,26 @@ func handle_interaction():
 						
 						bed.play()
 						await fade_and_switch_camera(bed_camera)
+						
+						
+
+			elif target:
+				var hit = target
+				# Climb upward until we find something in group "PC"
+				while hit and not hit.is_in_group("PC"):
+					hit = hit.get_parent()
+
+				if hit and hit.is_in_group("PC"):
+					interact_label.text = "Press E to Use PC"
+					interact_label.visible = true
+					crosshair_ui.visible = false
+
+					if Input.is_action_just_pressed("interact"):
+						if hit.has_method("interact"):
+							hit.interact(self)
+
+
+
 		else:
 			# While sleeping
 			if sleep_label_shown:
@@ -546,10 +582,11 @@ func handle_interaction():
 
 	if small_target.is_colliding():
 		var target_short = small_target.get_collider()
-		if target_short.is_in_group("border"):
+		if target_short and target_short.is_in_group("border"):
 			interact_label.text = "Cant Enter"
 			interact_label.visible = true
 			crosshair_ui.visible = false
+
 
 func pick_up_weapon(world_weapon: RigidBody3D):
 	if not world_weapon.has_meta("item_id"):
@@ -734,3 +771,85 @@ func play_cutscene(anim_name: String) -> void:
 	# Show held item again
 	if held_visual:
 		held_visual.visible = true
+
+
+var money = 100
+
+func open_shop_ui():
+	input_locked = true
+	can_move = false
+	velocity = Vector3.ZERO
+
+	fade_anim.play("fade_out")
+	await fade_anim.animation_finished
+
+	if shop_ui:
+		shop_ui.visible = true
+
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	crosshair_ui.visible = false
+	interact_label.visible = false
+
+	fade_anim.play("fade_in")
+	await fade_anim.animation_finished
+
+
+func close_shop_ui():
+	fade_anim.play("fade_out")
+	await fade_anim.animation_finished
+
+	if shop_ui:
+		shop_ui.visible = false
+
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	crosshair_ui.visible = true
+
+	input_locked = false
+	can_move = true
+
+	fade_anim.play("fade_in")
+	await fade_anim.animation_finished
+
+
+# -------------------------------------------------
+#  BUY HANDLER (clean version)
+# -------------------------------------------------
+func _on_shop_buy(item_id: String, quantity: int = 0):
+	var price := _get_price(item_id)
+	if price == -1:
+		print("Unknown item:", item_id)
+		return
+
+	var total_cost := price * quantity
+
+	if money < total_cost:
+		print("Not enough money!")
+		return
+
+	# SUCCESS
+	money -= total_cost
+	print("Bought:", item_id, "x", quantity)
+	print("Remaining money:", money)
+
+	pickup.play()
+
+	if shop_ui:
+		shop_ui.set_money_text(money)
+
+
+# Helper: item price table
+func _get_price(item_id: String) -> int:
+	var prices = {
+		"acoustic": 50,
+		"guitar": 10,
+		"broom": 15,
+		"trash": 5,
+		"flashlight": 30,
+		"dumbell_small": 3
+	}
+	return prices.get(item_id, -1)
+
+
+# Exit button
+func _on_shop_exit():
+	close_shop_ui()
