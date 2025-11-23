@@ -1,10 +1,11 @@
 extends CanvasLayer
 
+@onready var shop_ui: Control = $"../ShopUI"
+
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	visible = false
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	layer = 1000  # Always on top
+	layer = 1000
 
 func _process(_delta):
 	if Input.is_action_just_pressed("esc"):
@@ -13,14 +14,12 @@ func _process(_delta):
 		else:
 			pause()
 
+	if get_tree().paused:
+		_update_cursor_mode()
+
 func pause():
 	get_tree().paused = true
 	visible = true
-
-	var dialogue = get_tree().current_scene.get_node_or_null("Dialogue")
-	if dialogue:
-		dialogue.visible = false  # Hide visually, but don't free it
-
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func resume():
@@ -28,17 +27,16 @@ func resume():
 
 func _resume_next_frame() -> void:
 	get_tree().paused = false
-	await get_tree().process_frame  # Let pause state settle
+	await get_tree().process_frame
 	visible = false
+	_update_cursor_mode()
 
-	var dialogue = get_tree().current_scene.get_node_or_null("Dialogue")
-	if dialogue:
-		dialogue.visible = true
-		dialogue.process_mode = Node.PROCESS_MODE_ALWAYS
-		if dialogue.has_method("restore_focus_after_resume"):
-			dialogue.restore_focus_after_resume()
-
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+func _update_cursor_mode() -> void:
+	# If pause menu OR shop is open → show mouse
+	if visible or (shop_ui and shop_ui.visible):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _on_resume_pressed() -> void:
 	resume()

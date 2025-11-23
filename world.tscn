@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=4 uid="uid://cmac83d5iyyy1"]
+[gd_scene load_steps=75 format=4 uid="uid://cmac83d5iyyy1"]
 
 [ext_resource type="PackedScene" uid="uid://csy87yqtq4xjd" path="res://asset/room/properties/desk.tscn" id="1_pkg7o"]
 [ext_resource type="Texture2D" uid="uid://c5k0kpklnrycx" path="res://asset/horn-koppe_spring_2k.hdr" id="1_ryup7"]
@@ -231,10 +231,6 @@ bind/2/pose = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w44yn"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_jas3d"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_7htu6"]
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uqhup"]
 resource_name = "Material.001"
 cull_mode = 2
@@ -247,7 +243,7 @@ cull_mode = 2
 albedo_color = Color(0, 1, 0.05914159, 1)
 roughness = 0.0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_1qdei"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_xpnt2"]
 _surfaces = [{
 "aabb": AABB(-6.752157, -8.743681, -4.0733643, 13.504314, 15.217858, 10.723233),
 "format": 34359742465,
@@ -301,7 +297,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("wSjPQHaIg0DD8HXA/8DPQLDUhEA9IXfAucfPQPwwhEDD8HXAwSjPQPwwhECxLnfAucfPQPwwhEDD8HXARBPQQKwahkA9IXfAkzzQQAQAhkDD8HXA/8DPQLDUhEA9IXfAwSjPQHiIg0CIDVxA/8DPQLLUhEACPl1AwSjPQP4whEB2S11AucfPQP4whECIDVxAwSjPQP4whEB2S11A/8DPQK4ahkCK4l1AwSjPQAYAhkArNV5A/8DPQLLUhEACPl1AwSjPwHaIg0DD8HXA/8DPwLDUhEA9IXfAwSjPwPwwhECxLnfAucfPwPwwhEDD8HXAwSjPwPwwhECxLnfA/8DPwKwahkDFxXfAwSjPwAQAhkBnGHjA/8DPwLDUhEA9IXfAwSjPwHiIg0CIDVxA/8DPwLLUhEACPl1AucfPwP4whECIDVxAwSjPwP4whEB2S11AucfPwP4whECIDVxARBPQwK4ahkACPl1AkzzQwAYAhkCIDVxA/8DPwLLUhEACPl1AAAAAAHaIg0DD8HXAwSjPQPwwhECxLnfAwSjPQHaIg0DD8HXAAAAAAHYxhEAdL3fAwSjPwHaIg0DD8HXAwSjPwPwwhECxLnfAAAAAAHYxhEAdL3fAwSjPQAQAhkBnGHjAwSjPQPwwhECxLnfAAAAAADL/hUArGHjAwSjPQHiIg0CIDVxAAAAAAHgxhEDiS11AAAAAAHiIg0CIDVxAwSjPQP4whEB2S11AwSjPwP4whEB2S11AwSjPwHiIg0CIDVxAwSjPQP4whEB2S11AAAAAADT/hUDvNF5AAAAAAHgxhEDiS11AwSjPQAYAhkArNV5AwSjPQHaIg0DD8HXAucfPQP4whECIDVxAwSjPQHiIg0CIDVxAucfPQPwwhEDD8HXAucfPQPwwhEDD8HXAkzzQQAYAhkCIDVxAucfPQP4whECIDVxAkzzQQAQAhkDD8HXAucfPwPwwhEDD8HXAwSjPwHiIg0CIDVxAucfPwP4whECIDVxAwSjPwHaIg0DD8HXAwSjPwHaIg0DD8HXAAAAAAHiIg0CIDVxAwSjPwHiIg0CIDVxAAAAAAHaIg0DD8HXAwSjPQHaIg0DD8HXAwSjPQHiIg0CIDVxAG1Q3qDS9TQ8bVDeoNL1NDxtUN6g0vU0PG1Q3qDS9TQ9bLpqUIjznjVsumpR2Ra6NWy6alMtKjY1bLpqUejMcjjgoG9TKQmlrOCgb1MpCaWs4KBvUykIejDgoG9TKQmlrmhQ85lxXlI2aFDzmXFeUjZoUPOZcV2pymhQ85lxXlI3jqzeoykKD7eOrN6jKQoPt46s3qMpCBArjqzeoykKD7cKZmZTjU8IQwpmZlONTwhDCmZmU/l18+MKZmZTjU8IQxtcb1P///7/G1xvU////v8bXG9T///+/xtcb1P///79k61uuVw2Hc2TrW67TUWINZOtbrjRm5Qxk61uu8ECqfv9/Gr7DQd7//38avskAy7//fxq+yQDLv/9/Gr47vt7//38avvD+BsH/fxq+Mf/HwP9/ypkAAP8//3/KmQAA/z//f8qZAAD/P/9/ypkAAP8/48H//yL/1UDjwf//Gr4AgOPB//8avgCA48H//2P/lkDjwf//Gr4AgOPB//8avgCAM+b//0z/RsAz5v//TP9GwDPm///Kmf5/M+b//0z/RsAiPiG+ov8rACI+Ib6i/ysAIj4hvqL/KwAiPiG+ov8rAMsZypn7AB+AyxnKmfsAH4DLGcqZ+wAfgMsZypn7AB+A3MEhvi4A6f/cwSG+LgDp/9zBIb7dQREf3MEhvi4A6f//f///AADf4f9//////x8e/3///wAA3+H/f/////8fHv9//////x8e/3//////Hx4=")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_1qdei")
+shadow_mesh = SubResource("ArrayMesh_xpnt2")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jas3d"]
 size = Vector3(0.28686523, 0.6401062, 0.8261719)
@@ -847,21 +843,12 @@ transform = Transform3D(-0.609042, 0, 1.98451e-07, 0, 0.609042, 0, -1.98451e-07,
 [node name="Cube_056" parent="." instance=ExtResource("1_pkg7o")]
 transform = Transform3D(-1.71829e-07, 0, -0.609042, 0, 0.609042, 0, 0.609042, 0, -1.71829e-07, -8.54651, 0.691464, -0.947581)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["pc_shop"]]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5.5664186, 1.033493, 0.4174211)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("SphereShape3D_jas3d")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-mesh = SubResource("SphereMesh_7htu6")
-
 [node name="Monitor" type="StaticBody3D" parent="." groups=["PC"]]
-transform = Transform3D(1, 0, -8.3518705e-23, 0, 1, 0, -8.351872e-23, -2.1175824e-22, 1, -38.47223, 1.4223905, 7.440497)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.466917, 1.4193207, -0.7247958)
 script = ExtResource("42_7htu6")
 
 [node name="Monitor" type="MeshInstance3D" parent="Monitor"]
-transform = Transform3D(-2.6226832e-09, 0.016, -2.6226832e-09, 0, -6.993822e-10, -0.06, -0.06, -6.993822e-10, 1.1464112e-16, 0, 0, 0)
+transform = Transform3D(-2.6226832e-09, 0.016, -2.6226832e-09, 0, -6.993822e-10, -0.06, -0.06, -6.993822e-10, 1.1464113e-16, 0, 0, 0)
 mesh = SubResource("ArrayMesh_7htu6")
 skeleton = NodePath("")
 

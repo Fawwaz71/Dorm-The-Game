@@ -54,6 +54,7 @@ var current_object_index = 0
 @onready var small_target: RayCast3D = $Head/Camera3D/small_target
 @onready var light: SpotLight3D = $Head/Camera3D/SpotLight3D
 @onready var hand_target: Marker3D = $Head/Camera3D/HandTarget
+@onready var object_spawn: Node3D = $ObjectSpawn
 
 #audio
 @onready var footstep_walk: AudioStreamPlayer3D = $SFX/footstep_walk
@@ -770,35 +771,22 @@ func play_cutscene(anim_name: String) -> void:
 		held_visual.visible = true
 
 
-var money = 100
+var money = 1000
 
 func open_shop_ui():
 	input_locked = true
 	can_move = false
 	velocity = Vector3.ZERO
 
-	fade_anim.play("fade_out")
-	await fade_anim.animation_finished
-
 	if shop_ui:
 		shop_ui.visible = true
+		shop_ui._update_money_label(money)
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	crosshair_ui.visible = false
 	interact_label.visible = false
 
-	fade_anim.play("fade_in")
-	await fade_anim.animation_finished
-	if shop_ui:
-		shop_ui.visible = true
-		# Update money immediately when shop opens
-		shop_ui._update_money_label(money)
-
-
 func close_shop_ui():
-	fade_anim.play("fade_out")
-	await fade_anim.animation_finished
-
 	if shop_ui:
 		shop_ui.visible = false
 
@@ -808,8 +796,6 @@ func close_shop_ui():
 	input_locked = false
 	can_move = true
 
-	fade_anim.play("fade_in")
-	await fade_anim.animation_finished
 
 
 # -------------------------------------------------
@@ -834,7 +820,7 @@ func _on_shop_buy(item_id: String, quantity: int = 1):
 	if shop_ui:
 		shop_ui.set_money_text(money)
 
-	# Spawn purchased item(s) directly in front of the player
+	# Spawn purchased item(s) at the Marker3D
 	for i in range(quantity):
 		spawn_bought_item(item_id)
 
@@ -844,18 +830,25 @@ func spawn_bought_item(item_id: String):
 		print("Unknown item:", item_id)
 		return
 
-	var scene = item_database[item_id]["physics"]
+	var scene: PackedScene = item_database[item_id]["physics"]
 	var instance: RigidBody3D = scene.instantiate()
 
-	# 1️⃣ Add to the current scene first
+	# Add to scene first
 	get_tree().current_scene.add_child(instance)
 
-	# 2️⃣ Now global_transform is valid
-	var forward = -camera.global_transform.basis.z.normalized()
-	instance.global_transform.origin = global_transform.origin + forward * 1.5 + Vector3(0, 1, 0)
+	# Position at spawn point
+	if object_spawn:
+		# Slight random offset to avoid overlapping multiple items
+		var offset = Vector3(randf_range(-0.5, 0.5), 0, randf_range(-0.5, 0.5))
+		instance.global_transform.origin = object_spawn.global_transform.origin + offset
+	else:
+		# fallback to in front of player
+		var forward = -camera.global_transform.basis.z.normalized()
+		instance.global_transform.origin = global_transform.origin + forward * 1.5 + Vector3(0, 1, 0)
+
 	instance.set_meta("item_id", item_id)
 
-	# Optional: reset physics state
+	# Reset physics
 	instance.sleeping = false
 	instance.freeze = false
 	instance.gravity_scale = 1.0
