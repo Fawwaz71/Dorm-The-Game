@@ -151,6 +151,12 @@ func _ready():
 	
 	objects.append(preload("res://asset/BuildObject/Table.tscn"))
 	objects.append(preload("res://asset/BuildObject/wardrobe.tscn"))
+	
+	if shop_ui:
+		# Godot 4 style: connect signals to Callables
+		shop_script.buy_item.connect(Callable(self, "_on_shop_buy_item"))
+		shop_script.exit_shop.connect(Callable(self, "_on_shop_exit"))
+	shop_ui.visible = false
 
 func building(_delta):
 	var snap_pos: Vector3 = snap_to_grid(hand_target.global_position, grid_size)
@@ -181,12 +187,6 @@ func building(_delta):
 		block_instance.global_transform.origin = snap_to_grid(ghost_block.global_transform.origin, grid_size)
 		block_instance.global_rotation = ghost_block.global_rotation
 
-
-	if shop_ui:
-		# Godot 4 style: connect signals to Callables
-		shop_script.buy_item.connect(Callable(self, "_on_shop_buy_item"))
-		shop_script.exit_shop.connect(Callable(self, "_on_shop_exit"))
-	shop_ui.visible = false
 
 
 func get_floor_height(start_pos: Vector3) -> float:
@@ -366,9 +366,6 @@ func handle_interaction():
 
 	if raycast.is_colliding():
 		var target = raycast.get_collider()
-		# Pickup item
-		print("Raycast hit:", target)
-		print("Groups:", target.get_groups())
 
 		if held_visual == null and target is RigidBody3D and target.is_in_group("pickable"):
 			interact_label.text = "Press E to Pick Up"
@@ -818,27 +815,50 @@ func close_shop_ui():
 # -------------------------------------------------
 #  BUY HANDLER (clean version)
 # -------------------------------------------------
-func _on_shop_buy(item_id: String, quantity: int = 0):
+func _on_shop_buy(item_id: String, quantity: int = 1):
 	var price := _get_price(item_id)
 	if price == -1:
 		print("Unknown item:", item_id)
 		return
 
 	var total_cost := price * quantity
-
 	if money < total_cost:
 		print("Not enough money!")
 		return
 
-	# SUCCESS
 	money -= total_cost
-	print("Bought:", item_id, "x", quantity)
-	print("Remaining money:", money)
+	print("Bought:", item_id, "x", quantity, "Remaining money:", money)
 
 	pickup.play()
 
 	if shop_ui:
 		shop_ui.set_money_text(money)
+
+	# Spawn purchased item(s) directly in front of the player
+	for i in range(quantity):
+		spawn_bought_item(item_id)
+
+# Spawn bought item in front of the player
+func spawn_bought_item(item_id: String):
+	if not item_database.has(item_id):
+		print("Unknown item:", item_id)
+		return
+
+	var scene = item_database[item_id]["physics"]
+	var instance: RigidBody3D = scene.instantiate()
+
+	# 1️⃣ Add to the current scene first
+	get_tree().current_scene.add_child(instance)
+
+	# 2️⃣ Now global_transform is valid
+	var forward = -camera.global_transform.basis.z.normalized()
+	instance.global_transform.origin = global_transform.origin + forward * 1.5 + Vector3(0, 1, 0)
+	instance.set_meta("item_id", item_id)
+
+	# Optional: reset physics state
+	instance.sleeping = false
+	instance.freeze = false
+	instance.gravity_scale = 1.0
 
 
 # Helper: item price table

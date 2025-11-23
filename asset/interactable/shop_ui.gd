@@ -5,7 +5,7 @@ signal exit_shop()
 
 var shop_items: Array[Dictionary] = [
 	{"id": "acoustic", "name": "Acoustic", "price": 50, "icon": "res://icon.png"},
-	{"id": "electric", "name": "Electric", "price": 100, "icon": "res://icon.png"},
+	{"id": "electric", "name": "Electric", "price": 100, "icon": "res://asset/interactable/guitar_Image_0.png"},
 	{"id": "acoustic2", "name": "Acoustic 2", "price": 55, "icon": "res://icon.png"},
 	{"id": "electric2", "name": "Electric 2", "price": 110, "icon": "res://icon.png"},
 	{"id": "acoustic3", "name": "Acoustic 3", "price": 60, "icon": "res://icon.png"},
@@ -21,6 +21,11 @@ var shop_items: Array[Dictionary] = [
 	{"id": "mic1", "name": "Mic 1", "price": 25, "icon": "res://icon.png"},
 	{"id": "mic2", "name": "Mic 2", "price": 30, "icon": "res://icon.png"}
 ]
+
+var item_scenes := {
+	"acoustic": preload("res://asset/interactable/rigid_acoustic.tscn"),
+	"electric": preload("res://asset/interactable/Rigid_guitar.tscn")
+}
 
 
 @onready var money_label: Label = $PanelContainer/MarginContainer/VBoxContainer/MoneyLabel
@@ -93,18 +98,21 @@ func _create_item_box(item: Dictionary) -> Panel:
 	style.corner_radius_bottom_left = 10
 	style.corner_radius_bottom_right = 10
 	panel.add_theme_stylebox_override("panel", style)
-	panel.custom_minimum_size = Vector2(90, 120)
+	panel.custom_minimum_size = Vector2(95, 155)
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
+	# MarginContainer with proper padding for Godot 4
 	var margin = MarginContainer.new()
-	margin.add_theme_constant_override("margin_left", 4)
-	margin.add_theme_constant_override("margin_right", 4)
-	margin.add_theme_constant_override("margin_top", 4)
-	margin.add_theme_constant_override("margin_bottom", 4)
+	margin.add_theme_constant_override("margin_left", 8)
+	margin.add_theme_constant_override("margin_right", 8)
+	margin.add_theme_constant_override("margin_top", 8)
+	margin.add_theme_constant_override("margin_bottom", 8)
 	panel.add_child(margin)
 
 	var vbox = VBoxContainer.new()
-	vbox.size_flags_horizontal = Control.SIZE_FILL
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	margin.add_child(vbox)
 
@@ -115,23 +123,23 @@ func _create_item_box(item: Dictionary) -> Panel:
 		icon.texture = tex
 	icon.expand = true
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	icon.custom_minimum_size = Vector2(32, 32)
+	icon.custom_minimum_size = Vector2(70, 70)
 	icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	icon.size_flags_vertical = Control.SIZE_EXPAND
+	icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	vbox.add_child(icon)
 
 	# Name
 	var title = Label.new()
 	title.text = item.name
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 14)
+	title.add_theme_font_size_override("font_size", 12)
 	vbox.add_child(title)
 
 	# Price
 	var price = Label.new()
 	price.text = "$%d" % item.price
 	price.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	price.add_theme_font_size_override("font_size", 10)
+	price.add_theme_font_size_override("font_size", 12)
 	vbox.add_child(price)
 
 	# Quantity controls
@@ -144,12 +152,11 @@ func _create_item_box(item: Dictionary) -> Panel:
 	_set_small_button_style(minus_btn)
 	hbox.add_child(minus_btn)
 
-	# Only one qty_lbl
 	var qty_lbl = Label.new()
 	qty_lbl.text = str(quantities.get(item.id, 0))
-	qty_lbl.custom_minimum_size = Vector2(16, 16)
+	qty_lbl.custom_minimum_size = Vector2(20, 20)
 	qty_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	qty_lbl.add_theme_font_size_override("font_size", 10)
+	qty_lbl.add_theme_font_size_override("font_size", 12)
 	hbox.add_child(qty_lbl)
 
 	var plus_btn = Button.new()
@@ -176,6 +183,8 @@ func _create_item_box(item: Dictionary) -> Panel:
 	)
 
 	return panel
+
+
 
 
 func _populate_shop_grid() -> void:
@@ -217,6 +226,7 @@ func _on_buy_pressed() -> void:
 			buy_item.emit(id, cart[id])
 	_reset_cart()
 	buy_button.visible = false
+
 
 func _reset_cart() -> void:
 	for id in cart.keys():
