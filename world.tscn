@@ -856,6 +856,19 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013868332, -0.050875068, 0)
 shape = SubResource("BoxShape3D_jas3d")
 
+[node name="Monitor2" type="StaticBody3D" parent="." groups=["PC"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.0916, 1.4193207, 6.0055914)
+script = ExtResource("42_7htu6")
+
+[node name="Monitor" type="MeshInstance3D" parent="Monitor2"]
+transform = Transform3D(-2.6226832e-09, 0.016, -2.6226832e-09, 0, -6.993822e-10, -0.06, -0.06, -6.993822e-10, 1.1464113e-16, 0, 0, 0)
+mesh = SubResource("ArrayMesh_7htu6")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Monitor2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013868332, -0.050875068, 0)
+shape = SubResource("BoxShape3D_jas3d")
+
 [node name="PC" type="StaticBody3D" parent="." groups=["pc_shop"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.181695, 1.033493, -1.3874745)
 collision_layer = 7

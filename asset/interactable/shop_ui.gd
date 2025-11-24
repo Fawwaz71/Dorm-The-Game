@@ -17,10 +17,10 @@ var shop_items: Array[Dictionary] = [
 var cart: Dictionary[String,int] = {}
 var quantities: Dictionary[String,int] = {}
 
-@onready var money_label: Label = $PanelContainer/MarginContainer/VBoxContainer/MoneyLabel
-@onready var items_grid: GridContainer = $PanelContainer/MarginContainer/VBoxContainer/GridContainer
-@onready var exit_button: Button = $PanelContainer/MarginContainer/VBoxContainer/ExitButton
-@onready var buy_button: Button = $PanelContainer/MarginContainer/VBoxContainer/BuyButton
+@onready var money_label: Label = $"TabContainer/Item Shop/VBoxContainer/MoneyLabel"
+@onready var items_grid: GridContainer = $"TabContainer/Item Shop/VBoxContainer/ItemsGrid"
+@onready var exit_button: Button = $VBoxContainer2/ExitButton
+@onready var buy_button: Button = $"TabContainer/Item Shop/VBoxContainer/BuyButton"
 
 func _ready():
 	visible = false
