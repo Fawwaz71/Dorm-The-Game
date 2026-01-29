@@ -14,13 +14,26 @@ var shop_items: Array[Dictionary] = [
 	{"id": "mic1", "name": "Mic 1", "price": 25, "icon": "res://icon.png"}
 ]
 
+var furniture_items: Array[Dictionary] = [
+	{"id": "chair1", "name": "Chair", "price": 40, "icon": "res://icon.png"},
+	{"id": "table1", "name": "Table", "price": 80, "icon": "res://icon.png"},
+	{"id": "bed1", "name": "Bed", "price": 120, "icon": "res://icon.png"},
+	{"id": "lamp1", "name": "Lamp", "price": 25, "icon": "res://icon.png"}
+]
+
 var cart: Dictionary[String,int] = {}
 var quantities: Dictionary[String,int] = {}
+var selected_furniture_id: String = ""
+
 
 @onready var money_label: Label = $"TabContainer/Item Shop/VBoxContainer/MoneyLabel"
 @onready var items_grid: GridContainer = $"TabContainer/Item Shop/VBoxContainer/ItemsGrid"
 @onready var exit_button: Button = $VBoxContainer2/ExitButton
 @onready var buy_button: Button = $"TabContainer/Item Shop/VBoxContainer/BuyButton"
+
+@onready var money_label_2: Label = $TabContainer/Furniture/VBoxContainer/MoneyLabel2
+@onready var items_grid_2: GridContainer = $TabContainer/Furniture/VBoxContainer/ItemsGrid2
+@onready var buy_button_2: Button = $TabContainer/Furniture/VBoxContainer/BuyButton2
 
 func _ready():
 	visible = false
@@ -39,6 +52,11 @@ func _ready():
 	exit_button.pressed.connect(_on_press_exit)
 	buy_button.pressed.connect(_on_buy_pressed)
 	buy_button.visible = false
+	
+	_populate_furniture_grid()
+	buy_button_2.pressed.connect(_on_furniture_buy_pressed)
+	buy_button_2.visible = false
+
 
 
 # Small button styling
@@ -210,3 +228,98 @@ func _update_money_label(player_money: int = 0) -> void:
 	
 func set_money_text(value: int) -> void:
 	money_label.text = "Money: $" + str(value)
+
+func _populate_furniture_grid() -> void:
+	for child in items_grid_2.get_children():
+		child.queue_free()
+
+	for item in furniture_items:
+		items_grid_2.add_child(_create_furniture_box(item))
+
+
+func _create_furniture_box(item: Dictionary) -> Panel:
+	var panel = Panel.new()
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color("#222A3A")  # Same color as item shop
+	style.corner_radius_top_left = 10
+	style.corner_radius_top_right = 10
+	style.corner_radius_bottom_left = 10
+	style.corner_radius_bottom_right = 10
+	panel.add_theme_stylebox_override("panel", style)
+	panel.custom_minimum_size = Vector2(95,155)
+	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+
+	var margin = MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 8)
+	margin.add_theme_constant_override("margin_right", 8)
+	margin.add_theme_constant_override("margin_top", 8)
+	margin.add_theme_constant_override("margin_bottom", 8)
+	panel.add_child(margin)
+
+	var vbox = VBoxContainer.new()
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	margin.add_child(vbox)
+
+	# Icon
+	var icon = TextureRect.new()
+	var tex = load(item.icon)
+	if tex and tex is Texture2D:
+		icon.texture = tex
+	icon.expand = true
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.custom_minimum_size = Vector2(70,70)
+	icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	vbox.add_child(icon)
+
+	# Name label
+	var title = Label.new()
+	title.text = item.name
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 12)
+	vbox.add_child(title)
+
+	# Price label
+	var price = Label.new()
+	price.text = "$%d" % item.price
+	price.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	price.add_theme_font_size_override("font_size", 12)
+	vbox.add_child(price)
+
+	# SELECT button — styled like a neutral box
+	var select_btn = Button.new()
+	select_btn.text = "SELECT"
+	select_btn.custom_minimum_size = Vector2(70, 26)
+
+	# MATCH STYLE of + / - buttons
+	_set_small_button_style(select_btn)
+
+	# Increase size so it feels like a main button
+	select_btn.custom_minimum_size = Vector2(60, 24)
+
+	vbox.add_child(select_btn)
+
+	select_btn.pressed.connect(func():
+		selected_furniture_id = item.id
+		buy_button_2.text = "BUY ($%d)" % item.price
+		buy_button_2.visible = true
+	)
+
+	return panel
+
+
+func _on_furniture_buy_pressed() -> void:
+	if selected_furniture_id == "":
+		return
+	
+	buy_item.emit(selected_furniture_id, 1)  # always 1 per furniture
+	
+	# Reset
+	selected_furniture_id = ""
+	buy_button_2.visible = false
+
+	# Auto close shop
+	exit_shop.emit()

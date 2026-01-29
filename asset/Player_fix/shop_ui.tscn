@@ -69,9 +69,10 @@ theme_override_styles/tabbar_background = SubResource("StyleBoxFlat_setlf")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_a432g")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_rvl0y")
 theme_override_styles/tab_selected = ExtResource("2_setlf")
-current_tab = 0
+current_tab = 1
 
 [node name="Item Shop" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -112,9 +113,44 @@ layout_mode = 2
 icon_alignment = 1
 
 [node name="Furniture" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Furniture"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="TabContainer/Furniture/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.2159017, 0.21590173, 0.2159017, 0)
+theme_override_constants/shadow_offset_x = 191
+theme_override_constants/shadow_offset_y = 341
+theme_override_constants/shadow_outline_size = 706
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_aabr1")
+text = "furniture.xyz"
+
+[node name="MoneyLabel2" type="Label" parent="TabContainer/Furniture/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[node name="ItemsGrid2" type="GridContainer" parent="TabContainer/Furniture/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 9
+
+[node name="BuyButton2" type="Button" parent="TabContainer/Furniture/VBoxContainer"]
+layout_mode = 2
+icon_alignment = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
 layout_mode = 0

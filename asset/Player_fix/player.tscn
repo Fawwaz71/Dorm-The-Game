@@ -223,6 +223,7 @@ libraries = {
 }
 
 [node name="CRT" type="ColorRect" parent="CanvasLayer"]
+visible = false
 material = SubResource("ShaderMaterial_w70i0")
 anchors_preset = 15
 anchor_right = 1.0
