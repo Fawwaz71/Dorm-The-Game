@@ -858,6 +858,7 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013868332, -0.050875068, 0)
 shape = SubResource("BoxShape3D_jas3d")
 
+<<<<<<< HEAD
 [node name="Monitor2" type="StaticBody3D" parent="." unique_id=440557556 groups=["PC"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.0916, 1.4193207, 6.0055914)
 script = ExtResource("42_7htu6")
@@ -872,6 +873,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013868332, -0.050875068, 0)
 shape = SubResource("BoxShape3D_jas3d")
 
 [node name="PC" type="StaticBody3D" parent="." unique_id=1622166009 groups=["pc_shop"]]
+=======
+[node name="PC" type="StaticBody3D" parent="." groups=["pc_shop"]]
+>>>>>>> parent of 30ffaf0 (shop furniture)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.181695, 1.033493, -1.3874745)
 collision_layer = 7
 collision_mask = 7

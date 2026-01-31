@@ -26,10 +26,10 @@ var quantities: Dictionary[String,int] = {}
 var selected_furniture_id: String = ""
 
 
-@onready var money_label: Label = $"TabContainer/Item Shop/VBoxContainer/MoneyLabel"
-@onready var items_grid: GridContainer = $"TabContainer/Item Shop/VBoxContainer/ItemsGrid"
-@onready var exit_button: Button = $VBoxContainer2/ExitButton
-@onready var buy_button: Button = $"TabContainer/Item Shop/VBoxContainer/BuyButton"
+@onready var money_label: Label = $PanelContainer/MarginContainer/VBoxContainer/MoneyLabel
+@onready var items_grid: GridContainer = $PanelContainer/MarginContainer/VBoxContainer/GridContainer
+@onready var exit_button: Button = $PanelContainer/MarginContainer/VBoxContainer/ExitButton
+@onready var buy_button: Button = $PanelContainer/MarginContainer/VBoxContainer/BuyButton
 
 @onready var money_label_2: Label = $TabContainer/Furniture/VBoxContainer/MoneyLabel2
 @onready var items_grid_2: GridContainer = $TabContainer/Furniture/VBoxContainer/ItemsGrid2
