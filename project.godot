@@ -14,7 +14,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="Dorm-The-Game"
+config/name="Clean the game"
 run/main_scene="uid://cmac83d5iyyy1"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
